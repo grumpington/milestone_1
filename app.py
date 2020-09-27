@@ -17,28 +17,35 @@ def add_movie():
 
 def list_movies():
     for movie in movies:
-        print(f'{movie["title"]} was directed by {movie["director"]} in the year {movie["year"]}')
+        print_movie_info(movie)
+
+
+def print_movie_info(movie):
+    print(f'{movie["title"]} was directed by {movie["director"]} in the year {movie["year"]} and is located at shelf {movie["shelf"]}')
 
 
 def find_movie():
     search_string = input("What movie are you looking for? ")
     for movie in movies:
         if search_string == movie["title"]:
-            print(
-                f'{movie["title"]} was directed by {movie["director"]} in the year {movie["year"]} and is located at shelf {movie["shelf"]}')
+            print_movie_info(movie)
         else:
             print("Could not find movie in database")
+
+
+user_options = {
+    "a": add_movie,
+    "l": list_movies,
+    "f": find_movie
+}
 
 
 def show_menu():
     selection = input(MENU_PROMPT)
     while selection != 'q':
-        if selection == 'a':
-            add_movie()
-        elif selection == 'l':
-            list_movies()
-        elif selection == 'f':
-            find_movie()
+        if selection in user_options:
+            selected_function = user_options[selection]
+            selected_function()
         else:
             print("Unknown command. Please try again")
 
